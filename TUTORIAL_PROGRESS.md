@@ -27,10 +27,12 @@ Completed:
 - Homepage hero added in Arabic.
 - Rubik font configured with `next/font/google`.
 - Global font tokens updated to use Rubik.
+- Root layout updated for Arabic RTL with `lang="ar"` and `dir="rtl"`.
+- Shared navbar added at `components/navbar/TopBar.tsx`.
+- Navbar rendered from `app/layout.tsx`.
 
 Not built yet:
 
-- Navbar.
 - Fake listings data.
 - Listing cards.
 - Real listing details UI.
@@ -41,11 +43,6 @@ Not built yet:
 - Image upload.
 - Luma API integration.
 - Offers flow.
-
-Needs quick cleanup:
-
-- Ensure the root `<html>` tag uses `lang="ar"` and `dir="rtl"`.
-- Keep all public route links using plural `/listings`.
 
 ## Route-First Direction
 
@@ -158,16 +155,27 @@ Build pages in this order:
 
 ## Current Next Step
 
-Do a quick layout cleanup, then add the shared navbar.
+Add fake listing data and the first listing type.
 
-Before the navbar, verify the root layout has:
+Create:
 
-```tsx
-<html lang="ar" dir="rtl">
-```
+- `types/listing.ts`
+- `data/listings.ts`
 
-Then create `components/navbar.tsx` with Arabic labels and add it to
-`app/layout.tsx` above `{children}`.
+Use Arabic user-facing listing content, but keep the TypeScript field names in
+English. Example fields:
+
+- `id`
+- `title`
+- `price`
+- `category`
+- `location`
+- `description`
+- `imageUrl`
+- `createdAt`
+
+After that, add shadcn `Card` and `Badge`, then build the reusable
+`ListingCard` component.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

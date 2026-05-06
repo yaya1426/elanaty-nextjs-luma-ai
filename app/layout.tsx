@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import TopBar from "@/components/navbar/TopBar";
 
 const rubik = Rubik({
   subsets: ["arabic", "latin"],
@@ -27,7 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ar"
+      dir="rtl"
       className={cn(
         "h-full",
         "antialiased",
@@ -36,7 +38,10 @@ export default function RootLayout({
         geistMono.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <TopBar />
+        {children}
+      </body>
     </html>
   );
 }

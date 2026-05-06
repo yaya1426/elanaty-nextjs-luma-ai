@@ -36,11 +36,13 @@ Completed:
 - Reusable listing card added at `components/listings/ListingCard.tsx`.
 - `/listings` page updated to show fake listings in a responsive grid.
 - Unsplash image host configured in `next.config.ts`.
+- Homepage latest listings section intentionally skipped for simplicity.
+- Listing details page built at `/listings/[id]` using fake data.
+- Listing details page uses `notFound()` when the fake listing does not exist.
+- Seller and make-offer areas added as placeholders only.
 
 Not built yet:
 
-- Homepage latest listings section.
-- Real listing details UI.
 - Real create listing form UI.
 - Real dashboard UI.
 - MongoDB.
@@ -107,7 +109,7 @@ Use plural English route names for public listing pages:
 
 - Public homepage.
 - Introduces Elanaty AI.
-- Shows latest fake listings.
+- Keeps the landing page simple with hero text and CTA buttons only.
 
 `/listings`
 
@@ -153,28 +155,35 @@ Build pages in this order:
 4. Add shared app shell, starting with the navbar.
 5. Add fake listing type and data.
 6. Add shadcn-based listing cards.
-7. Update homepage and listings page to show fake listings.
+7. Update `/listings` page to show fake listings.
 8. Build listing details page with fake data.
 9. Build create listing form UI.
 10. Stop before MongoDB.
 
 ## Current Next Step
 
-Reuse the same listing cards on the homepage.
+Build the create listing form UI at `/listings/create`.
 
-Update `app/page.tsx` to add an "أحدث الإعلانات" section below the hero. Use
-the first few items from `fakeListings` and render them with
-`components/listings/ListingCard.tsx`.
+This should be a visual form only. It should not save to a database yet.
 
 Keep this simple:
 
-- No search yet.
-- No category filters yet.
 - No database yet.
 - No auth yet.
+- No real image upload yet.
+- The image upload field is only a placeholder.
+- On submit, it can do nothing for now or show a simple temporary message later.
 
-After the homepage shows latest listings, move to the listing details page at
-`/listings/[id]`.
+Suggested fields:
+
+- Title.
+- Price.
+- Category.
+- Location.
+- Description.
+- Product image placeholder.
+
+After the create listing form UI works, stop before MongoDB.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

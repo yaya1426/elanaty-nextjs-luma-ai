@@ -29,7 +29,7 @@ export async function connectToDatabase() {
     return cached.conn;
   }
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI);
+    cached.promise = mongoose.connect(MONGO_URI as string);
   }
   cached.conn = await cached.promise;
   return cached.conn;

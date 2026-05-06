@@ -19,15 +19,17 @@ Completed:
 - `.env*` files are ignored.
 - First commit already exists.
 - Initial route placeholders created:
-  - `/listing`
-  - `/listing/create`
-  - `/listing/[id]`
+  - `/listings`
+  - `/listings/create`
+  - `/listings/[id]`
   - `/dashboard`
   - `/dashboard/offers`
+- Homepage hero added in Arabic.
+- Rubik font configured with `next/font/google`.
+- Global font tokens updated to use Rubik.
 
 Not built yet:
 
-- Marketplace homepage.
 - Navbar.
 - Fake listings data.
 - Listing cards.
@@ -40,6 +42,11 @@ Not built yet:
 - Luma API integration.
 - Offers flow.
 
+Needs quick cleanup:
+
+- Ensure the root `<html>` tag uses `lang="ar"` and `dir="rtl"`.
+- Keep all public route links using plural `/listings`.
+
 ## Route-First Direction
 
 Before building deeper features, we will create the app route structure with
@@ -51,7 +58,7 @@ The route structure should be:
 ```txt
 app/
   page.tsx
-  listing/
+  listings/
     page.tsx
     create/
       page.tsx
@@ -63,25 +70,34 @@ app/
       page.tsx
 ```
 
-## Route Naming Note
+## Language Direction
 
-The current implementation uses singular `listing`:
+The app UI should be Arabic-first and RTL.
 
-- `/listing`
-- `/listing/create`
-- `/listing/[id]`
+Use Arabic for:
 
-For a marketplace, plural route names are also common:
+- Page titles.
+- Navbar labels.
+- Buttons.
+- Form labels.
+- Empty states.
+- Error and loading messages.
+- Dashboard text.
+
+Keep code identifiers in English:
+
+- File and folder names.
+- Component names.
+- Variable names.
+- Type names.
+- Model fields later.
+- API route names later.
+
+Use plural English route names for public listing pages:
 
 - `/listings`
 - `/listings/create`
 - `/listings/[id]`
-
-Before building the navbar and listing cards, choose one route style and use it
-everywhere. The recommended tutorial-friendly option is plural `listings`
-because the page represents a collection of marketplace listings. If we keep
-the current singular route, all future links and snippets should use
-`/listing/...`.
 
 ## Route Purpose
 
@@ -91,19 +107,19 @@ the current singular route, all future links and snippets should use
 - Introduces Elanaty AI.
 - Shows latest fake listings.
 
-`/listing`
+`/listings`
 
 - Public listings browse page.
 - Can start as a simple page using fake listings.
 - Search and filters can wait until later.
 
-`/listing/[id]`
+`/listings/[id]`
 
 - Public listing details page.
 - Shows one listing from fake data.
 - Includes seller placeholder and make offer placeholder.
 
-`/listing/create`
+`/listings/create`
 
 - Create listing form UI.
 - Starts as UI only.
@@ -131,19 +147,27 @@ Build pages in this order:
 
 1. Clean starter homepage and metadata.
 2. Add route placeholders.
-3. Add shared app shell, starting with the navbar.
-4. Add fake listing type and data.
-5. Add shadcn-based listing cards.
-6. Update homepage and listings page to show fake listings.
-7. Build listing details page with fake data.
-8. Build create listing form UI.
-9. Stop before MongoDB.
+3. Configure Arabic-first UI direction and Rubik font.
+4. Add shared app shell, starting with the navbar.
+5. Add fake listing type and data.
+6. Add shadcn-based listing cards.
+7. Update homepage and listings page to show fake listings.
+8. Build listing details page with fake data.
+9. Build create listing form UI.
+10. Stop before MongoDB.
 
 ## Current Next Step
 
-Decide whether the public listing routes should stay singular (`/listing`) or
-be renamed to plural (`/listings`). After that, clean the starter homepage and
-metadata, then add the navbar and fake listing data.
+Do a quick layout cleanup, then add the shared navbar.
+
+Before the navbar, verify the root layout has:
+
+```tsx
+<html lang="ar" dir="rtl">
+```
+
+Then create `components/navbar.tsx` with Arabic labels and add it to
+`app/layout.tsx` above `{children}`.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

@@ -4,9 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { connectToDatabase } from "@/lib/mongodb";
 import Listing from "@/models/listing.model";
-
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import { saveListingImage } from "@/lib/image";
 
 export async function createListing(formData: FormData) {
   const title = String(formData.get("title") || "");
@@ -16,8 +14,14 @@ export async function createListing(formData: FormData) {
   const description = String(formData.get("description") || "");
 
   const image = formData.get("image");
-  const originalImageUrl =
-    image instanceof File ? await saveUploadedImage(image) : "";
+  const imageData =
+    image instanceof File ? await saveListingImage(image) : null;
+
+  if (!imageData) {
+    throw new Error("Failed to save image");
+  }
+
+  const { originalImageUrl, originalImageBase64, originalImageMediaType } = imageData;
 
   if (!title || !price || !category || !location || !description) {
     throw new Error("Missing required listing fields");
@@ -32,6 +36,8 @@ export async function createListing(formData: FormData) {
     location,
     description,
     originalImageUrl,
+    originalImageBase64,
+    originalImageMediaType,
     enhancedImageUrls: [],
     selectedImageUrl: "",
     status: "active",
@@ -40,21 +46,4 @@ export async function createListing(formData: FormData) {
   revalidatePath("/listings");
 
   redirect(`/listings/${listing._id.toString()}`);
-}
-
-async function saveUploadedImage(file: File) {
-  if (!file || file.size === 0) {
-    return "";
-  }
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadDir, { recursive: true });
-
-  const fileExtension = file.name.split(".").pop() || "jpg";
-  const fileName = `${crypto.randomUUID()}.${fileExtension}`;
-  const filePath = path.join(uploadDir, fileName);
-
-  await writeFile(filePath, buffer);
-  return `/uploads/${fileName}`;
 }

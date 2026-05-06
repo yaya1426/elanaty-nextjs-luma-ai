@@ -29,6 +29,14 @@ const listingSchema = new Schema(
       type: String,
       default: "",
     },
+    originalImageBase64: {
+      type: String,
+      default: "",
+    },
+    originalImageMediaType: {
+      type: String,
+      default: "",
+    },
     enhancedImageUrls: {
       type: [String],
       default: [],
@@ -49,7 +57,7 @@ const listingSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Listing = models.Listing || model("Listing", listingSchema);

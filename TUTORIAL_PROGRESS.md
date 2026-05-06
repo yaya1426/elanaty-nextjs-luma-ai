@@ -68,6 +68,30 @@ Needs cleanup before Clerk:
 - Use a temporary fallback image until real image upload is added.
 - Update Arabic copy on `/listings` so it no longer says the data is fake.
 
+## Image Strategy
+
+For the tutorial, we will use a local-development image approach first.
+
+When a seller creates a listing:
+
+- Save the uploaded image locally in `public/uploads`.
+- Store the public display path in MongoDB as `originalImageUrl`.
+- Store the same image as base64 in MongoDB as `originalImageBase64`.
+- Store the uploaded file media type in MongoDB as `originalImageMediaType`.
+- Set `selectedImageUrl` to `originalImageUrl` until Luma generates enhanced images.
+
+Why this approach:
+
+- The UI can display a normal image URL like `/uploads/product.jpg`.
+- Luma can later use `{ data, media_type }` directly from MongoDB.
+- We do not need to read the local file again during Luma generation.
+
+Important production note:
+
+- This is tutorial-friendly, but not ideal for production.
+- MongoDB documents have a 16MB limit, and base64 increases image size.
+- Later, a production app should use Cloudinary, UploadThing, S3, or Vercel Blob.
+
 ## Route-First Direction
 
 Before building deeper features, we will create the app route structure with
@@ -186,7 +210,7 @@ Build the tutorial in this order:
 
 ## Current Next Step
 
-Clean up the MongoDB listing display, then commit the database listing flow.
+Update local image upload to also store base64 image data for Luma.
 
 Current working demo flow:
 
@@ -203,14 +227,16 @@ Immediate cleanup:
 - Map MongoDB documents to the `Listing` display type with `_id` as a string.
 - Build `imageUrl` from `selectedImageUrl`, `originalImageUrl`, or a temporary placeholder.
 - Keep the placeholder image only until the image upload milestone.
+- Add `originalImageBase64` and `originalImageMediaType` to the Listing model.
+- Update the create listing action to save the uploaded file as both a local URL and base64 data.
 
 After that, the next tutorial section can begin:
 
-- Add Clerk authentication.
-- Save `sellerId` on new listings.
-- Protect `/listings/create`.
+- Build Luma prompt helper.
+- Build Luma image edit helper.
+- Add a server action to generate enhanced listing images.
 
-Do not add Clerk, image upload, or Luma until after database listings work.
+Do not add Clerk or offers until after the image enhancement flow works.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

@@ -30,11 +30,16 @@ Completed:
 - Root layout updated for Arabic RTL with `lang="ar"` and `dir="rtl"`.
 - Shared navbar added at `components/navbar/TopBar.tsx`.
 - Navbar rendered from `app/layout.tsx`.
+- Fake listing type added at `types/listing.ts`.
+- Fake Arabic listing data added at `data/fakeListings.ts`.
+- shadcn `Card`, `Badge`, and `Input` components added.
+- Reusable listing card added at `components/listings/ListingCard.tsx`.
+- `/listings` page updated to show fake listings in a responsive grid.
+- Unsplash image host configured in `next.config.ts`.
 
 Not built yet:
 
-- Fake listings data.
-- Listing cards.
+- Homepage latest listings section.
 - Real listing details UI.
 - Real create listing form UI.
 - Real dashboard UI.
@@ -155,27 +160,21 @@ Build pages in this order:
 
 ## Current Next Step
 
-Add fake listing data and the first listing type.
+Reuse the same listing cards on the homepage.
 
-Create:
+Update `app/page.tsx` to add an "أحدث الإعلانات" section below the hero. Use
+the first few items from `fakeListings` and render them with
+`components/listings/ListingCard.tsx`.
 
-- `types/listing.ts`
-- `data/listings.ts`
+Keep this simple:
 
-Use Arabic user-facing listing content, but keep the TypeScript field names in
-English. Example fields:
+- No search yet.
+- No category filters yet.
+- No database yet.
+- No auth yet.
 
-- `id`
-- `title`
-- `price`
-- `category`
-- `location`
-- `description`
-- `imageUrl`
-- `createdAt`
-
-After that, add shadcn `Card` and `Badge`, then build the reusable
-`ListingCard` component.
+After the homepage shows latest listings, move to the listing details page at
+`/listings/[id]`.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

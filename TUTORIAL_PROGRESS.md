@@ -40,10 +40,14 @@ Completed:
 - Listing details page built at `/listings/[id]` using fake data.
 - Listing details page uses `notFound()` when the fake listing does not exist.
 - Seller and make-offer areas added as placeholders only.
+- shadcn `Select` and `Textarea` components added.
+- Fake categories added at `data/fakeCategories.ts`.
+- Create listing form UI built at `/listings/create`.
+- Create listing form uses fake categories while keeping `category` as a string.
+- Product image upload is still a placeholder only.
 
 Not built yet:
 
-- Real create listing form UI.
 - Real dashboard UI.
 - MongoDB.
 - Clerk authentication.
@@ -162,28 +166,25 @@ Build pages in this order:
 
 ## Current Next Step
 
-Build the create listing form UI at `/listings/create`.
+Stop and review the UI-only marketplace flow before adding MongoDB.
 
-This should be a visual form only. It should not save to a database yet.
+Current working demo flow:
 
-Keep this simple:
+1. Open the Arabic homepage.
+2. Click "تصفح الإعلانات".
+3. View fake listing cards on `/listings`.
+4. Open a listing details page.
+5. Click "أضف إعلانك".
+6. View the create listing form UI.
 
-- No database yet.
-- No auth yet.
-- No real image upload yet.
-- The image upload field is only a placeholder.
-- On submit, it can do nothing for now or show a simple temporary message later.
+After committing this UI-only milestone, the next tutorial section can begin:
 
-Suggested fields:
+- Add MongoDB and Mongoose.
+- Create the `Listing` model.
+- Save real listings from the create form.
+- Replace fake listings with database listings.
 
-- Title.
-- Price.
-- Category.
-- Location.
-- Description.
-- Product image placeholder.
-
-After the create listing form UI works, stop before MongoDB.
+Do not add Clerk, image upload, or Luma until after database listings work.
 
 Small technical note: in this Next.js version, dynamic route `params` are typed
 as a `Promise`, so the listing details placeholder should eventually use:

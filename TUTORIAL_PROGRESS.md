@@ -45,11 +45,16 @@ Completed:
 - Create listing form UI built at `/listings/create`.
 - Create listing form uses fake categories while keeping `category` as a string.
 - Product image upload is still a placeholder only.
+- Mongoose installed.
+- MongoDB connection helper added at `lib/mongodb.ts`.
+- MongoDB environment variable documented as `MONGO_URI` in `.env.example`.
+- Listing model added at `models/listing.model.ts`.
 
 Not built yet:
 
 - Real dashboard UI.
-- MongoDB.
+- Saving listings to MongoDB.
+- Reading listings from MongoDB.
 - Clerk authentication.
 - Image upload.
 - Luma API integration.
@@ -151,7 +156,7 @@ dashboard offers page is for sellers to review incoming offers later.
 
 ## Tutorial Rule
 
-Build pages in this order:
+Build the tutorial in this order:
 
 1. Clean starter homepage and metadata.
 2. Add route placeholders.
@@ -162,11 +167,17 @@ Build pages in this order:
 7. Update `/listings` page to show fake listings.
 8. Build listing details page with fake data.
 9. Build create listing form UI.
-10. Stop before MongoDB.
+10. Add MongoDB connection setup and Listing model.
+11. Save listings to MongoDB.
+12. Read listings from MongoDB.
+13. Add Clerk authentication.
+14. Add image upload.
+15. Add Luma image enhancement.
+16. Add offers flow.
 
 ## Current Next Step
 
-Stop and review the UI-only marketplace flow before adding MongoDB.
+Commit the MongoDB setup milestone, then start saving listings to MongoDB.
 
 Current working demo flow:
 
@@ -177,11 +188,10 @@ Current working demo flow:
 5. Click "أضف إعلانك".
 6. View the create listing form UI.
 
-After committing this UI-only milestone, the next tutorial section can begin:
+MongoDB setup is now prepared. The next tutorial section can begin:
 
-- Add MongoDB and Mongoose.
-- Create the `Listing` model.
 - Save real listings from the create form.
+- Redirect to the created listing details page.
 - Replace fake listings with database listings.
 
 Do not add Clerk, image upload, or Luma until after database listings work.
@@ -201,7 +211,6 @@ params: { id: string }
 
 Do not add:
 
-- MongoDB or Mongoose.
 - Clerk.
 - Luma.
 - Upload providers.

@@ -18,6 +18,12 @@ Completed:
 - Git repository initialized.
 - `.env*` files are ignored.
 - First commit already exists.
+- Initial route placeholders created:
+  - `/listing`
+  - `/listing/create`
+  - `/listing/[id]`
+  - `/dashboard`
+  - `/dashboard/offers`
 
 Not built yet:
 
@@ -25,9 +31,9 @@ Not built yet:
 - Navbar.
 - Fake listings data.
 - Listing cards.
-- Listing details page.
-- Create listing page.
-- Dashboard pages.
+- Real listing details UI.
+- Real create listing form UI.
+- Real dashboard UI.
 - MongoDB.
 - Clerk authentication.
 - Image upload.
@@ -45,7 +51,7 @@ The route structure should be:
 ```txt
 app/
   page.tsx
-  listings/
+  listing/
     page.tsx
     create/
       page.tsx
@@ -53,9 +59,29 @@ app/
       page.tsx
   dashboard/
     page.tsx
-  offers/
-    page.tsx
+    offers/
+      page.tsx
 ```
+
+## Route Naming Note
+
+The current implementation uses singular `listing`:
+
+- `/listing`
+- `/listing/create`
+- `/listing/[id]`
+
+For a marketplace, plural route names are also common:
+
+- `/listings`
+- `/listings/create`
+- `/listings/[id]`
+
+Before building the navbar and listing cards, choose one route style and use it
+everywhere. The recommended tutorial-friendly option is plural `listings`
+because the page represents a collection of marketplace listings. If we keep
+the current singular route, all future links and snippets should use
+`/listing/...`.
 
 ## Route Purpose
 
@@ -65,19 +91,19 @@ app/
 - Introduces Elanaty AI.
 - Shows latest fake listings.
 
-`/listings`
+`/listing`
 
 - Public listings browse page.
 - Can start as a simple page using fake listings.
 - Search and filters can wait until later.
 
-`/listings/[id]`
+`/listing/[id]`
 
 - Public listing details page.
 - Shows one listing from fake data.
 - Includes seller placeholder and make offer placeholder.
 
-`/listings/create`
+`/listing/create`
 
 - Create listing form UI.
 - Starts as UI only.
@@ -90,11 +116,14 @@ app/
 - Will later show listings owned by the logged-in seller.
 - Should not require Clerk until the auth milestone.
 
-`/offers`
+`/dashboard/offers`
 
-- Offers placeholder page.
-- Will later show offers received or submitted.
+- Seller offers placeholder page.
+- Will later show offers received on the seller's listings.
 - Should not save anything until the offers milestone.
+
+Note: buyers will still make offers from the public listing details page. The
+dashboard offers page is for sellers to review incoming offers later.
 
 ## Tutorial Rule
 
@@ -112,8 +141,22 @@ Build pages in this order:
 
 ## Current Next Step
 
-Create the route placeholders and update the homepage so the app has a clear
-navigation structure while still using simple static UI.
+Decide whether the public listing routes should stay singular (`/listing`) or
+be renamed to plural (`/listings`). After that, clean the starter homepage and
+metadata, then add the navbar and fake listing data.
+
+Small technical note: in this Next.js version, dynamic route `params` are typed
+as a `Promise`, so the listing details placeholder should eventually use:
+
+```ts
+params: Promise<{ id: string }>
+```
+
+instead of:
+
+```ts
+params: { id: string }
+```
 
 Do not add:
 

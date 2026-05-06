@@ -20,6 +20,7 @@ export default async function ListingDetailsPage({
 
   await connectToDatabase();
   const listing = await Listing.findById(id).lean();
+  listing.imageUrl = listing.selectedImageUrl || listing.originalImageUrl || "";
 
   if (!listing) {
     notFound();

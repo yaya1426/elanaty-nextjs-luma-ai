@@ -18,7 +18,10 @@ export default async function ListingPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
-            <ListingCard key={listing._id.toString()} listing={listing} />
+            <ListingCard key={listing._id.toString()} listing={{
+              ...listing,
+              imageUrl: listing.selectedImageUrl || listing.originalImageUrl || "",
+            }} />
           ))}
         </div>
       </section>

@@ -82,11 +82,10 @@ export default function CreateListingPage() {
                 <label className="text-sm font-medium">صورة المنتج</label>
 
                 <div className="rounded-2xl border border-dashed bg-zinc-50 p-6 text-center">
-                  <p className="text-sm font-medium text-zinc-700">
-                    رفع الصورة سيُضاف لاحقاً
-                  </p>
-                  <p className="mt-1 text-sm text-zinc-500">
-                    لاحقاً سنستخدم هذه الصورة كمصدر لتحسينها باستخدام Luma AI.
+                  <Input name="image" type="file" accept="image/*" />
+                  <p className="mt-3 text-sm text-zinc-500">
+                    اختر صورة المنتج الأصلية. لاحقاً سنستخدم هذه الصورة كمصدر
+                    لتحسينها باستخدام Luma AI.
                   </p>
                 </div>
               </div>

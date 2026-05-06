@@ -1,10 +1,11 @@
-import { fakeListings } from "@/data/fakeListings";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Listing from "@/models/listing.model";
+import { connectToDatabase } from "@/lib/mongodb";
 
 type ListingDetailsPageProps = {
   params: Promise<{
@@ -16,7 +17,9 @@ export default async function ListingDetailsPage({
   params,
 }: ListingDetailsPageProps) {
   const { id } = await params;
-  const listing = fakeListings.find((item) => item.id === id);
+
+  await connectToDatabase();
+  const listing = await Listing.findById(id).lean();
 
   if (!listing) {
     notFound();
@@ -48,7 +51,7 @@ export default async function ListingDetailsPage({
                 {listing.price.toLocaleString("ar-EG")} جنيه مصري
               </p>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               <div>
                 <h2 className="mb-2 font-semibold">الوصف</h2>

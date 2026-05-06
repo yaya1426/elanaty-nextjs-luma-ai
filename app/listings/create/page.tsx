@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { fakeCategories } from "@/data/fakeCategories";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -16,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { createListing } from "./actions";
 
 export default function CreateListingPage() {
   return (
@@ -34,10 +30,13 @@ export default function CreateListingPage() {
           </CardHeader>
 
           <CardContent>
-            <form className="space-y-5">
+            <form action={createListing} className="space-y-5">
               <div className="space-y-2">
                 <label className="text-sm font-medium">عنوان الإعلان</label>
-                <Input name="title" placeholder="مثال: آيفون 15 برو بحالة ممتازة" />
+                <Input
+                  name="title"
+                  placeholder="مثال: آيفون 15 برو بحالة ممتازة"
+                />
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
@@ -93,8 +92,8 @@ export default function CreateListingPage() {
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button type="button" className="sm:flex-1">
-                  نشر الإعلان لاحقاً
+                <Button type="submit" className="sm:flex-1">
+                  نشر الإعلان
                 </Button>
 
                 <Button asChild type="button" variant="outline">

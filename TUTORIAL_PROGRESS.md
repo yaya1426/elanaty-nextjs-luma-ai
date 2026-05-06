@@ -30,8 +30,8 @@ Completed:
 - Root layout updated for Arabic RTL with `lang="ar"` and `dir="rtl"`.
 - Shared navbar added at `components/navbar/TopBar.tsx`.
 - Navbar rendered from `app/layout.tsx`.
-- Fake listing type added at `types/listing.ts`.
-- Fake Arabic listing data added at `data/fakeListings.ts`.
+- Listing display type added at `types/listing.ts`.
+- Fake Arabic listing data was removed after switching the listing flow to MongoDB.
 - shadcn `Card`, `Badge`, and `Input` components added.
 - Reusable listing card added at `components/listings/ListingCard.tsx`.
 - `/listings` page updated to show fake listings in a responsive grid.
@@ -49,16 +49,24 @@ Completed:
 - MongoDB connection helper added at `lib/mongodb.ts`.
 - MongoDB environment variable documented as `MONGO_URI` in `.env.example`.
 - Listing model added at `models/listing.model.ts`.
+- Create listing form now saves listings to MongoDB with a Server Action.
+- Created listings redirect to `/listings/[id]`.
+- `/listings` now reads listings from MongoDB.
+- `/listings/[id]` now reads listing details from MongoDB.
 
 Not built yet:
 
 - Real dashboard UI.
-- Saving listings to MongoDB.
-- Reading listings from MongoDB.
 - Clerk authentication.
 - Image upload.
 - Luma API integration.
 - Offers flow.
+
+Needs cleanup before Clerk:
+
+- Normalize MongoDB listing documents before passing them to `ListingCard`.
+- Use a temporary fallback image until real image upload is added.
+- Update Arabic copy on `/listings` so it no longer says the data is fake.
 
 ## Route-First Direction
 
@@ -162,7 +170,7 @@ Build the tutorial in this order:
 2. Add route placeholders.
 3. Configure Arabic-first UI direction and Rubik font.
 4. Add shared app shell, starting with the navbar.
-5. Add fake listing type and data.
+5. Add temporary fake listing type and data.
 6. Add shadcn-based listing cards.
 7. Update `/listings` page to show fake listings.
 8. Build listing details page with fake data.
@@ -170,29 +178,37 @@ Build the tutorial in this order:
 10. Add MongoDB connection setup and Listing model.
 11. Save listings to MongoDB.
 12. Read listings from MongoDB.
-13. Add Clerk authentication.
-14. Add image upload.
-15. Add Luma image enhancement.
-16. Add offers flow.
+13. Remove fake listing data and normalize MongoDB listing display.
+14. Add Clerk authentication.
+15. Add image upload.
+16. Add Luma image enhancement.
+17. Add offers flow.
 
 ## Current Next Step
 
-Commit the MongoDB setup milestone, then start saving listings to MongoDB.
+Clean up the MongoDB listing display, then commit the database listing flow.
 
 Current working demo flow:
 
 1. Open the Arabic homepage.
 2. Click "تصفح الإعلانات".
-3. View fake listing cards on `/listings`.
-4. Open a listing details page.
+3. View MongoDB listing cards on `/listings`.
+4. Open a MongoDB listing details page.
 5. Click "أضف إعلانك".
-6. View the create listing form UI.
+6. Submit the create listing form.
+7. Redirect to the new listing details page.
 
-MongoDB setup is now prepared. The next tutorial section can begin:
+Immediate cleanup:
 
-- Save real listings from the create form.
-- Redirect to the created listing details page.
-- Replace fake listings with database listings.
+- Map MongoDB documents to the `Listing` display type with `_id` as a string.
+- Build `imageUrl` from `selectedImageUrl`, `originalImageUrl`, or a temporary placeholder.
+- Keep the placeholder image only until the image upload milestone.
+
+After that, the next tutorial section can begin:
+
+- Add Clerk authentication.
+- Save `sellerId` on new listings.
+- Protect `/listings/create`.
 
 Do not add Clerk, image upload, or Luma until after database listings work.
 

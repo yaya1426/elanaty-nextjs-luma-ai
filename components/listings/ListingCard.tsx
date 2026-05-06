@@ -46,7 +46,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
 
       <CardFooter>
         <Button asChild className="w-full">
-          <Link href={`/listings/${listing.id}`}>عرض التفاصيل</Link>
+          <Link href={`/listings/${listing._id}`}>عرض التفاصيل</Link>
         </Button>
       </CardFooter>
     </Card>

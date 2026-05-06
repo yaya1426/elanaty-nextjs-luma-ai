@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Listing from "@/models/listing.model";
 import { connectToDatabase } from "@/lib/mongodb";
+import { enhanceListingImage } from "./actions";
+import EnhanceImageButton from "@/components/listings/EnhanceImageButton";
 
 type ListingDetailsPageProps = {
   params: Promise<{
@@ -67,13 +69,19 @@ export default async function ListingDetailsPage({
                 </p>
               </div>
               <div className="rounded-2xl border bg-zinc-50 p-4">
-                <p className="text-sm font-medium">
-                  تحسين الصورة بالذكاء الاصطناعي
-                </p>
-                <p className="mt-1 text-sm text-zinc-600">
-                  لاحقاً سنضيف هنا إشارة توضح أن صورة الإعلان تم تحسينها
-                  باستخدام Luma AI.
-                </p>
+                <div>
+                  <p className="text-sm font-medium">
+                    تحسين الصورة بالذكاء الاصطناعي
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-600">
+                    اضغط على الزر لتحويل صورة المنتج إلى صورة احترافية باستخدام
+                    Luma AI.
+                  </p>
+                </div>
+                <EnhanceImageButton
+                  listingId={id}
+                  enhanceAction={enhanceListingImage}
+                />
               </div>
               <Button className="w-full" size="lg">
                 قدّم عرض
